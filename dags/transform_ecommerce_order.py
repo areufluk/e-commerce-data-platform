@@ -3,14 +3,7 @@ from airflow.operators.python import PythonOperator
 import pendulum
 # import os
 
-from dags.scripts.test_env import show_env
-
-
-# def show_env():
-#     st_env_from_kube = os.environ.get("AIRFLOW_DB_NAME")
-#     nd_env_from_kube = os.environ.get("SUPERSET_DB_USER")
-#     print("first env: ", st_env_from_kube)
-#     print("second env: ", nd_env_from_kube)
+from scripts.test_env import print_env
 
 default_args = {
     "owner": "Chanayut"
@@ -26,7 +19,7 @@ with DAG(
 ) as dag:
     show_env_task = PythonOperator(
         task_id="show_env",
-        python_callable=show_env,
+        python_callable=print_env,
         dag=dag
     )
 
