@@ -3,7 +3,7 @@ from airflow.operators.python import PythonOperator
 import pendulum
 # import os
 
-from scripts.test_env import show_env
+from dags.scripts.test_env import show_env
 
 
 # def show_env():
