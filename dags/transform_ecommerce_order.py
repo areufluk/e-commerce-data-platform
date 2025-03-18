@@ -1,16 +1,16 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 import pendulum
-import os
+# import os
 
-# from scripts.test_env import show_env
+from scripts.test_env import show_env
 
 
-def show_env():
-    st_env_from_kube = os.environ.get("AIRFLOW_DB_NAME")
-    nd_env_from_kube = os.environ.get("SUPERSET_DB_USER")
-    print("first env: ", st_env_from_kube)
-    print("second env: ", nd_env_from_kube)
+# def show_env():
+#     st_env_from_kube = os.environ.get("AIRFLOW_DB_NAME")
+#     nd_env_from_kube = os.environ.get("SUPERSET_DB_USER")
+#     print("first env: ", st_env_from_kube)
+#     print("second env: ", nd_env_from_kube)
 
 default_args = {
     "owner": "Chanayut"
