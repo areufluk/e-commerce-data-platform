@@ -19,7 +19,7 @@ with DAG(
     extract_dim_city_job = SparkSubmitOperator(
         task_id='extract_dim_city',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/spark/dim_city.py',
+        application='/opt/airflow/dags/repo/scripts/dim_city.py',
         driver_class_path='/opt/airflow/jars/',
         dag=dag
     )
