@@ -9,24 +9,19 @@ def create_spark_session(app_name="DefaultApp"):
     :param master: Spark master URL (e.g., 'local[*]', 'spark://master:7077').
     :return: SparkSession object.
     """
-    builder = SparkSession.builder.appName(app_name)
+    builder = SparkSession.builder.appName(app_name).getOrCreate()
 
     SERVICE_ACCOUNT_KEY_ID = os.environ.get("SA_KEY_ID")
     SERVICE_ACCOUNT_EMAIL = os.environ.get("SA_EMAIL")
     SERVICE_ACCOUNT_PRIVATE_KEY = os.environ.get("SA_PRIVATE_KEY")
 
-    spark_configs = {
-        "spark.hadoop.fs.gs.impl": "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem",
-        "spark.hadoop.fs.gs.auth.service.account.enable": "true",
-        "fs.gs.auth.service.account.private.key.id": SERVICE_ACCOUNT_KEY_ID,
-        "fs.gs.auth.service.account.email": SERVICE_ACCOUNT_EMAIL,
-        "fs.gs.auth.service.account.private.key": SERVICE_ACCOUNT_PRIVATE_KEY
-    }
+    builder.conf.set('fs.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem')
+    builder.conf.set('fs.gs.auth.service.account.enable', 'true')
+    builder.conf.set("fs.gs.auth.service.account.private.key.id", SERVICE_ACCOUNT_KEY_ID)
+    builder.conf.set("fs.gs.auth.service.account.email", SERVICE_ACCOUNT_EMAIL)
+    builder.conf.set("fs.gs.auth.service.account.private.key", SERVICE_ACCOUNT_PRIVATE_KEY)
 
-    for key, value in spark_configs.items():
-        builder = builder.config(key, value)
-
-    return builder.getOrCreate()
+    return builder
 
 
 def transform_dim_city():
