@@ -20,6 +20,10 @@ def create_spark_session(app_name="DefaultApp"):
     builder.conf.set("fs.gs.auth.service.account.private.key.id", SERVICE_ACCOUNT_KEY_ID)
     builder.conf.set("fs.gs.auth.service.account.email", SERVICE_ACCOUNT_EMAIL)
     builder.conf.set("fs.gs.auth.service.account.private.key", SERVICE_ACCOUNT_PRIVATE_KEY)
+    builder.conf.set("spark.driver.port", "2222")
+    builder.conf.set("spark.driver.blockManager.port", "7777")
+    builder.conf.set("spark.driver.host", "spark-driver.airflow.svc.cluster.local")
+    builder.conf.set("spark.driver.bindAddress", "0.0.0.0")
 
     return builder
 
