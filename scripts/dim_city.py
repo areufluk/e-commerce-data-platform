@@ -11,13 +11,11 @@ def create_spark_session(app_name="DefaultApp"):
     """
     builder = SparkSession.builder.appName(app_name)
 
-    GCS_CONNECTOR_JAR_PATH = "jar/gcs-connector-hadoop3-latest.jar"
     SERVICE_ACCOUNT_KEY_ID = os.environ.get("SA_KEY_ID")
     SERVICE_ACCOUNT_EMAIL = os.environ.get("SA_EMAIL")
     SERVICE_ACCOUNT_PRIVATE_KEY = os.environ.get("SA_PRIVATE_KEY")
 
     spark_configs = {
-        "spark.jars": GCS_CONNECTOR_JAR_PATH,
         "spark.hadoop.fs.gs.impl": "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem",
         "spark.hadoop.fs.gs.auth.service.account.enable": "true",
         "fs.gs.auth.service.account.private.key.id": SERVICE_ACCOUNT_KEY_ID,
