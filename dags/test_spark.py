@@ -20,7 +20,7 @@ with DAG(
         task_id='extract_dim_city',
         conn_id='spark_conn',
         application='/opt/airflow/dags/repo/scripts/dim_city.py',
-        jars='jar/gcs-connector-hadoop3-latest.jar',
+        jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         dag=dag
     )
