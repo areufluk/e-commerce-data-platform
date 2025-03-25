@@ -1,4 +1,4 @@
-from scripts.create_session import create_spark_session
+from create_session import create_spark_session
 
 
 def transform_dim_city():
