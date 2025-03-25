@@ -16,6 +16,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/dim_city.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
+        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
         dag=dag
     )
 
