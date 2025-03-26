@@ -35,7 +35,6 @@ def transform_fact_grocery_sales():
 
     # Read dim_product from transform storage
     df_dim_product = spark.read \
-        .mode("overwrite") \
         .parquet(product_file_path)
 
     # Join dim_product to calculate total_price
