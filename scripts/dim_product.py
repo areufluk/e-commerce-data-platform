@@ -1,0 +1,41 @@
+from .create_session import create_spark_session
+
+
+def transform_dim_product():
+    bucket_name = "e-commerce-data-platform"
+    source_file_path = f"gs://{bucket_name}/raw/products.csv"
+    destination_file_path = f"gs://{bucket_name}/transform/product"
+
+    spark = create_spark_session(
+        app_name="Transform dim product"
+    )
+
+    # Read csv from raw storage
+    df = spark.read \
+        .option("inferSchema", True) \
+        .option("header", True) \
+        .csv(source_file_path)
+
+    # Change column name
+    df = df \
+        .withColumnRenamed("ProductID", "id") \
+        .withColumnRenamed("ProductName", "product_name") \
+        .withColumnRenamed("Price", "price") \
+        .withColumnRenamed("CategoryID", "category_id") \
+        .withColumnRenamed("Class", "class") \
+        .withColumnRenamed("ModifyDate", "modify_datetime") \
+        .withColumnRenamed("Resistant", "resistant") \
+        .withColumnRenamed("IsAllergic", "is_allergic") \
+        .withColumnRenamed("VitalityDays", "vitality_days")
+
+    # Write parquet to transform storage
+    df.write \
+        .mode("overwrite") \
+        .parquet(destination_file_path)
+
+    # Stop the Spark session
+    spark.stop()
+
+
+if __name__ == "__main__":
+    transform_dim_product()
