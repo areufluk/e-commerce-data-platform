@@ -80,10 +80,12 @@ with DAG(
         dag=dag
     )
 
-    extract_dim_category_job
-    >> extract_dim_city_job
-    >> extract_dim_country_job
-    >> extract_dim_customer_job
-    >> extract_dim_employee_job
-    >> extract_dim_product_job
-    >> extract_fact_grocery_sales_job
+    (
+        extract_dim_category_job
+        >> extract_dim_city_job
+        >> extract_dim_country_job
+        >> extract_dim_customer_job
+        >> extract_dim_employee_job
+        >> extract_dim_product_job
+        >> extract_fact_grocery_sales_job
+    )
