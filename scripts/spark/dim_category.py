@@ -1,4 +1,4 @@
-from spark.utils.create_session import create_spark_session
+from scripts.spark.utils.create_session import create_spark_session
 
 
 def transform_dim_category():
