@@ -4,14 +4,14 @@ import pendulum
 
 
 with DAG(
-    dag_id="transform_grocery_sales",
+    dag_id="transform_test",
     schedule=None,
     start_date=pendulum.datetime(2025, 3, 26, tz="Asia/Bangkok"),
     catchup=False
 ) as dag:
 
     extract_dim_category_job = SparkSubmitOperator(
-        task_id='extract_dim_category',
+        task_id='extract_test_1',
         conn_id='spark_conn',
         application='/opt/airflow/dags/repo/scripts/spark/dim_category.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
