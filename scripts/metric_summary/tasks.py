@@ -1,4 +1,4 @@
-from scripts.product_group.tasks import test_call_function
+from product_group.tasks import test_call_function
 
 
 def test_main_function():
