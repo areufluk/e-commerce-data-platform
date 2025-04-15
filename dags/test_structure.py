@@ -1,7 +1,6 @@
 from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
-from metric_summary.tasks import test_main_function
 import pendulum
 
 
@@ -11,12 +10,6 @@ with DAG(
     start_date=pendulum.datetime(2025, 3, 26, tz="Asia/Bangkok"),
     catchup=False
 ) as dag:
-
-    test_py_function = PythonOperator(
-        task_id='test_py',
-        python_callable=test_main_function,
-        dag=dag
-    )
 
     extract_dim_category_job = SparkSubmitOperator(
         task_id='extract_test_1',
@@ -28,7 +21,12 @@ with DAG(
         dag=dag
     )
 
+    soda_quality_check = BashOperator(
+        task_id="soda_quality_check",
+        bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/configuration.yml /opt/airflow/dags/repo/scripts/soda/dim_category.yml"
+    )
+
     (
-        test_py_function >>
-        extract_dim_category_job
+        extract_dim_category_job >>
+        soda_quality_check
     )

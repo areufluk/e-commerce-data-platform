@@ -1,0 +1,7 @@
+data_source grocery_sales:
+  type: bigquery
+  account_info_json_path: /opt/airflow/secrets/service-account.json
+  auth_scopes:
+  - https://www.googleapis.com/auth/bigquery
+  project_id: "helloworld-ab722"
+  dataset: grocery_sales
