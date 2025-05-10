@@ -1,0 +1,45 @@
+checks for dim_category:
+  - row_count > 0
+  - missing_count(id) = 0
+  - duplicate_count(id) = 0
+  - missing_count(category_name) = 0
+
+checks for dim_city:
+  - row_count > 0
+  - missing_count(id) = 0
+  - duplicate_count(id) = 0
+  - missing_count(city_name) = 0
+  - missing_count(zipcode) = 0
+  - invalid_percent(zipcode) < 5:
+      valid format: regex
+      regex: '^\d{5}$'
+  - missing_count(country_id) = 0
+
+checks for dim_country:
+  - row_count > 0
+  - missing_count(id) = 0
+  - duplicate_count(id) = 0
+  - missing_count(country_name) = 0
+  - missing_count(country_code) = 0
+
+checks for dim_customer:
+  - row_count > 0
+  - missing_count(id) = 0
+  - duplicate_count(id) = 0
+  - missing_count(first_name) = 0
+  - missing_count(last_name) = 0
+  - missing_count(city_id) = 0
+  - missing_count(address) = 0
+
+checks for dim_product:
+  - row_count > 0
+  - missing_count(id) = 0
+  - duplicate_count(id) = 0
+  - missing_count(product_name) = 0
+  - missing_count(price) = 0
+  - failed rows:
+      name: price must be positive
+      fail condition: price <= 0
+  - missing_count(category_id) = 0
+  - missing_count(modify_datetime) = 0
+  - missing_count(is_allergic) = 0

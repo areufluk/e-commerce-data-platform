@@ -1,4 +1,5 @@
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 import pendulum
 
@@ -70,14 +71,19 @@ with DAG(
         dag=dag
     )
 
-    extract_fact_grocery_sales_job = SparkSubmitOperator(
-        task_id='extract_fact_grocery_sales',
-        conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/fact_grocery_sales.py',
-        jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
-        driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
-        dag=dag
+    # extract_fact_grocery_sales_job = SparkSubmitOperator(
+    #     task_id='extract_fact_grocery_sales',
+    #     conn_id='spark_conn',
+    #     application='/opt/airflow/dags/repo/scripts/fact_grocery_sales.py',
+    #     jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
+    #     driver_class_path='/opt/airflow/jars/',
+    #     py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+    #     dag=dag
+    # )
+
+    soda_quality_check = BashOperator(
+        task_id="soda_quality_check",
+        bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/ configuration.yml /opt/airflow/dags/repo/scripts/soda/grocery_sales/dim_category.yml"
     )
 
     (
@@ -87,5 +93,6 @@ with DAG(
         >> extract_dim_customer_job
         >> extract_dim_employee_job
         >> extract_dim_product_job
-        >> extract_fact_grocery_sales_job
+        # >> extract_fact_grocery_sales_job
+        >> soda_quality_check
     )
