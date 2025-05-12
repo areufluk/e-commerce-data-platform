@@ -83,7 +83,7 @@ with DAG(
 
     soda_quality_check = BashOperator(
         task_id="soda_quality_check",
-        bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/ configuration.yml /opt/airflow/dags/repo/scripts/soda/grocery_sales/dim_category.yml"
+        bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/ configuration.yml /opt/airflow/dags/repo/scripts/soda/grocery_sales/checks.yml"
     )
 
     (
