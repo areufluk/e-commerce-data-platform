@@ -10,7 +10,7 @@ def create_spark_session(app_name="DefaultApp"):
     """
     builder = SparkSession.builder \
         .appName(app_name) \
-        .config("spark.driver.host", "spark-driver.airflow.svc.cluster.local") \
+        .config("spark.driver.host", "spark-driver.spark.svc.cluster.local") \
         .config("spark.driver.port", "2222") \
         .config("spark.blockManager.port", "7777") \
         .config("spark.driver.bindAddress", "0.0.0.0") \
