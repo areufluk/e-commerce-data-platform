@@ -17,7 +17,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_category.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -27,7 +27,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_city.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -37,7 +37,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_country.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -47,7 +47,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_customer.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -57,7 +57,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_employee.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -67,7 +67,7 @@ with DAG(
         application='/opt/airflow/dags/repo/scripts/spark/dim_product.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
-        py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
         dag=dag
     )
 
@@ -77,7 +77,7 @@ with DAG(
     #     application='/opt/airflow/dags/repo/scripts/spark/fact_grocery_sales.py',
     #     jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
     #     driver_class_path='/opt/airflow/jars/',
-    #     py_files='/opt/airflow/dags/repo/scripts/create_session.py',
+    #     py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
     #     dag=dag
     # )
 
