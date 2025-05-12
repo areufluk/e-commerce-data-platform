@@ -14,7 +14,7 @@ with DAG(
     extract_dim_category_job = SparkSubmitOperator(
         task_id='extract_dim_category',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_category.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_category.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -24,7 +24,7 @@ with DAG(
     extract_dim_city_job = SparkSubmitOperator(
         task_id='extract_dim_city',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_city.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_city.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -34,7 +34,7 @@ with DAG(
     extract_dim_country_job = SparkSubmitOperator(
         task_id='extract_dim_country',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_country.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_country.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -44,7 +44,7 @@ with DAG(
     extract_dim_customer_job = SparkSubmitOperator(
         task_id='extract_dim_customer',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_customer.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_customer.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -54,7 +54,7 @@ with DAG(
     extract_dim_employee_job = SparkSubmitOperator(
         task_id='extract_dim_employee',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_employee.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_employee.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -64,7 +64,7 @@ with DAG(
     extract_dim_product_job = SparkSubmitOperator(
         task_id='extract_dim_product',
         conn_id='spark_conn',
-        application='/opt/airflow/dags/repo/scripts/dim_product.py',
+        application='/opt/airflow/dags/repo/scripts/spark/dim_product.py',
         jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
         driver_class_path='/opt/airflow/jars/',
         py_files='/opt/airflow/dags/repo/scripts/create_session.py',
@@ -74,7 +74,7 @@ with DAG(
     # extract_fact_grocery_sales_job = SparkSubmitOperator(
     #     task_id='extract_fact_grocery_sales',
     #     conn_id='spark_conn',
-    #     application='/opt/airflow/dags/repo/scripts/fact_grocery_sales.py',
+    #     application='/opt/airflow/dags/repo/scripts/spark/fact_grocery_sales.py',
     #     jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
     #     driver_class_path='/opt/airflow/jars/',
     #     py_files='/opt/airflow/dags/repo/scripts/create_session.py',
