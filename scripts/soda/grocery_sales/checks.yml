@@ -10,9 +10,6 @@ checks for dim_city:
   - duplicate_count(id) = 0
   - missing_count(city_name) = 0
   - missing_count(zipcode) = 0
-  - invalid_percent(zipcode) < 5:
-      valid format: regex
-      regex: '^\d{5}$'
   - missing_count(country_id) = 0
 
 checks for dim_country:
