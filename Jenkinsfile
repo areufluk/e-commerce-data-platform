@@ -85,7 +85,7 @@ pipeline {
                     when {
                         branch "develop"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to Develop site..."
                     }
                 }
@@ -94,7 +94,7 @@ pipeline {
                     when {
                         branch "uat"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to UAT site..."
                     }
                 }
@@ -103,7 +103,7 @@ pipeline {
                     when {
                         tag "release-v.*"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to Production site..."
                     }
                 }
