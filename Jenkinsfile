@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim()
-        BRANCH_NAME = env.CHANGE_TARGET ?: env.BRANCH_NAME
+        BRANCH_NAME = env.BRANCH_NAME
         IMAGE_REGISTRY = "asia-southeast1-docker.pkg.dev"
         PROJECT_ID = "helloworld-ab722"
         IMAGE_REPOSITORY = "e-commerce-images"
