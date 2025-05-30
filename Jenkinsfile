@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim()
-        BRANCH_NAME = env.BRANCH_NAME
+        BRANCH_NAME = "${env.BRANCH_NAME ?: sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()}"
         IMAGE_REGISTRY = "asia-southeast1-docker.pkg.dev"
         PROJECT_ID = "helloworld-ab722"
         IMAGE_REPOSITORY = "e-commerce-images"
@@ -14,7 +14,6 @@ pipeline {
 
     options {
         skipStagesAfterUnstable()
-        timestamps()
     }
 
     stages {
@@ -27,7 +26,9 @@ pipeline {
         stage("Check Changed Folders") {
             steps {
                 script {
-                    def changedFiles = sh(script: "git diff --name-only origin/${BRANCH_NAME}", returnStdout: true).trim().split("\n")
+                    def baseCommit = sh(script: 'git rev-parse HEAD^', returnStdout: true).trim()
+                    def changedFiles = sh(script: "git diff --name-only ${baseCommit}", returnStdout: true).trim().split("\n")
+                    // def changedFiles = sh(script: "git diff --name-only origin/${BRANCH_NAME}", returnStdout: true).trim().split("\n")
                     def hasOtherFolderChanges = changedFiles.any { file ->
                         !(file.startsWith("dags/") || file.startsWith("scripts/"))
                     }
@@ -85,7 +86,7 @@ pipeline {
                     when {
                         branch "develop"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to Develop site..."
                     }
                 }
@@ -94,7 +95,7 @@ pipeline {
                     when {
                         branch "uat"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to UAT site..."
                     }
                 }
@@ -103,7 +104,7 @@ pipeline {
                     when {
                         tag "release-v.*"
                     }
-                    step {
+                    steps {
                         echo "🔍 Deploy to Production site..."
                     }
                 }
