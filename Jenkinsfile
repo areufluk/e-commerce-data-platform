@@ -32,13 +32,11 @@ pipeline {
                     def hasOtherFolderChanges = changedFiles.any { file ->
                         !(file.startsWith("dags/") || file.startsWith("scripts/"))
                     }
-
-                    echo "🔍 changedFiles (as list): ${changedFiles}"
-                    echo "🔍 hasOtherFolderChanges (as list): ${hasOtherFolderChanges}"
-
-                    env.SKIP_BUILD_DEPLOY = !(hasOtherFolderChanges.toString())
+                    env.SKIP_BUILD_DEPLOY = (!hasOtherFolderChanges).toString()
                 }
-                echo "Only dags/ and scripts/ change?: ${env.SKIP_BUILD_DEPLOY}"
+                echo "🔍 changedFiles (as list): ${changedFiles}"
+                echo "🔍 hasOtherFolderChanges (as list): ${hasOtherFolderChanges}"
+                echo "🔍 Only dags/ and scripts/ change?: ${env.SKIP_BUILD_DEPLOY}"
             }
         }
 
