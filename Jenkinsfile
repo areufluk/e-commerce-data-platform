@@ -29,6 +29,7 @@ pipeline {
                     def baseCommit = sh(script: 'git rev-parse HEAD^', returnStdout: true).trim()
                     def changedFiles = sh(script: "git diff --name-only ${baseCommit}", returnStdout: true).trim().split("\n")
                     // def changedFiles = sh(script: "git diff --name-only origin/${BRANCH_NAME}", returnStdout: true).trim().split("\n")
+                    echo "${changedFiles}"
                     def hasOtherFolderChanges = changedFiles.any { file ->
                         !(file.startsWith("dags/") || file.startsWith("scripts/"))
                     }
