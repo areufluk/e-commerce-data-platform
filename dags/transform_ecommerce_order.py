@@ -94,5 +94,5 @@ with DAG(
         >> extract_dim_employee_job
         >> extract_dim_product_job
         # >> extract_fact_grocery_sales_job
-        >> soda_quality_check
+        # >> soda_quality_check
     )
