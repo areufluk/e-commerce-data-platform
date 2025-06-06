@@ -36,15 +36,14 @@ pipeline {
                     env.BUILD_DEPLOY = hasOtherFolderChanges
 
                     echo "🔍 changedFiles (as list): ${changedFiles}"
-                    echo "🔍 hasOtherFolderChanges (as list): ${hasOtherFolderChanges}"
-                    echo "Only dags/ and scripts/ change?: ${env.BUILD_DEPLOY}"
+                    echo "🔍 hasOtherFolderChanges (as list): ${BUILD_DEPLOY}"
                 }
             }
         }
 
         stage("Run Tests") {
             when {
-                expression { env.BUILD_DEPLOY.toBoolean() }
+                expression { return env.BUILD_DEPLOY }
             }
             steps {
             //     sh '''
