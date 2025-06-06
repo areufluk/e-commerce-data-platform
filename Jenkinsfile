@@ -43,7 +43,7 @@ pipeline {
 
         stage("Run Tests") {
             when {
-                expression { return env.BUILD_DEPLOY == 'true' }
+                expression { return env.BUILD_DEPLOY }
             }
             steps {
             //     sh '''
@@ -122,7 +122,7 @@ pipeline {
         //         //         """
         //         //     }
         //     }
-        }
+        // }
     }
 
     post {
