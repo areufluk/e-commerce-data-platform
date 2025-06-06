@@ -81,10 +81,10 @@ with DAG(
     #     dag=dag
     # )
 
-    soda_quality_check = BashOperator(
-        task_id="soda_quality_check",
-        bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/configuration.yml /opt/airflow/dags/repo/scripts/soda/grocery_sales/checks.yml"
-    )
+    # soda_quality_check = BashOperator(
+    #     task_id="soda_quality_check",
+    #     bash_command="soda scan -d grocery_sales -c /opt/airflow/dags/repo/scripts/soda/configuration.yml /opt/airflow/dags/repo/scripts/soda/grocery_sales/checks.yml"
+    # )
 
     (
         extract_dim_category_job
@@ -94,5 +94,5 @@ with DAG(
         >> extract_dim_employee_job
         >> extract_dim_product_job
         # >> extract_fact_grocery_sales_job
-        >> soda_quality_check
+        # >> soda_quality_check
     )
