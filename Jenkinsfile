@@ -33,7 +33,7 @@ pipeline {
                         !(file.startsWith("dags/") || file.startsWith("scripts/"))
                     }
 
-                    env.SKIP_BUILD_DEPLOY = !(hasOtherFolderChanges).toString()
+                    env.SKIP_BUILD_DEPLOY = !hasOtherFolderChanges
 
                     echo "🔍 changedFiles (as list): ${changedFiles}"
                     echo "🔍 hasOtherFolderChanges (as list): ${hasOtherFolderChanges}"
@@ -42,29 +42,29 @@ pipeline {
             }
         }
 
-        // stage("Run Tests") {
-        //     when {
-        //         expression { env.SKIP_BUILD_DEPLOY != "true" }
-        //     }
-        //     steps {
-        //     //     sh '''
-        //     //         pip install -r requirements.txt
-        //     //         pip install pytest flake8 black pylint
+        stage("Run Tests") {
+            when {
+                expression { !env.SKIP_BUILD_DEPLOY }
+            }
+            steps {
+            //     sh '''
+            //         pip install -r requirements.txt
+            //         pip install pytest flake8 black pylint
                     
-        //         echo "🧪 Running unit tests..."
-        //     //         pytest tests/
+                echo "🧪 Running unit tests..."
+            //         pytest tests/
 
-        //         echo "🧹 Checking code style with flake8..."
-        //     //         flake8 plugins/ dags/ scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics
+                echo "🧹 Checking code style with flake8..."
+            //         flake8 plugins/ dags/ scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics
 
-        //         echo "🎨 Running Black formatting check..."
-        //     //         black --check plugins/ dags/ scripts/
+                echo "🎨 Running Black formatting check..."
+            //         black --check plugins/ dags/ scripts/
 
-        //         echo "🔍 Running pylint..."
-        //     //         pylint plugins/
-        //     //     '''
-        //     }
-        // }
+                echo "🔍 Running pylint..."
+            //         pylint plugins/
+            //     '''
+            }
+        }
 
         // stage("Build and Push Docker Image") {
         //     when {
