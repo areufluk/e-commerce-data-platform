@@ -43,7 +43,7 @@ pipeline {
 
         stage("Run Tests") {
             when {
-                expression { return env.BUILD_DEPLOY }
+                expression { return env.BUILD_DEPLOY == 'true' }
             }
             steps {
             //     sh '''
