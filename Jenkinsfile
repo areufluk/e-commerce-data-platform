@@ -36,14 +36,14 @@ pipeline {
                     env.BUILD_DEPLOY = hasOtherFolderChanges
 
                     echo "🔍 changedFiles (as list): ${changedFiles}"
-                    echo "🔍 hasOtherFolderChanges (as list): ${BUILD_DEPLOY}"
+                    echo "🔍 hasOtherFolderChanges (as list): ${env.BUILD_DEPLOY}"
                 }
             }
         }
 
         stage("Run Tests") {
             when {
-                expression { return env.BUILD_DEPLOY }
+                expression { env.BUILD_DEPLOY == 'true' }
             }
             steps {
             //     sh '''
