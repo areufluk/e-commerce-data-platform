@@ -32,15 +32,18 @@ pipeline {
                     def hasOtherFolderChanges = changedFiles.any { file ->
                         !(file.startsWith("dags/") || file.startsWith("scripts/"))
                     }
-                    env.SKIP_BUILD_DEPLOY = !(hasOtherFolderChanges.toString())
+
+                    env.BUILD_DEPLOY = hasOtherFolderChanges
+
+                    echo "🔍 changedFiles (as list): ${changedFiles}"
+                    echo "🔍 hasOtherFolderChanges (as list): ${env.BUILD_DEPLOY}"
                 }
-                echo "Only dags/ and scripts/ change?: ${env.SKIP_BUILD_DEPLOY}"
             }
         }
 
         stage("Run Tests") {
             when {
-                expression { env.SKIP_BUILD_DEPLOY != "true" }
+                expression { env.BUILD_DEPLOY == 'true' }
             }
             steps {
             //     sh '''
@@ -62,64 +65,64 @@ pipeline {
             }
         }
 
-        stage("Build and Push Docker Image") {
-            when {
-                expression { env.SKIP_BUILD_DEPLOY != "true" }
-            }
-            steps {
-                echo "🔍 Build docker image... ${env.DOCKER_IMAGE}"
-                echo "🔍 Push docker image... ${env.DOCKER_IMAGE}"
-                // docker build -t asia-southeast1-docker.pkg.dev/helloworld-ab722/e-commerce-images/airflow:1.1.3 
-                // <resigtry>
-            //     script {
-            //         sh "docker build -t ${DOCKER_IMAGE} ."
-            //     }
-            }
-        }
+        // stage("Build and Push Docker Image") {
+        //     when {
+        //         expression { env.BUILD_DEPLOY != "true" }
+        //     }
+        //     steps {
+        //         echo "🔍 Build docker image... ${env.DOCKER_IMAGE}"
+        //         echo "🔍 Push docker image... ${env.DOCKER_IMAGE}"
+        //         // docker build -t asia-southeast1-docker.pkg.dev/helloworld-ab722/e-commerce-images/airflow:1.1.3 
+        //         // <resigtry>
+        //     //     script {
+        //     //         sh "docker build -t ${DOCKER_IMAGE} ."
+        //     //     }
+        //     }
+        // }
 
-        stage("Deploy to K8s Cluster") {
-            when {
-                expression { env.SKIP_BUILD_DEPLOY != "true" }
-            }
-            parallel {
-                stage("Develop") {
-                    when {
-                        branch "develop"
-                    }
-                    steps {
-                        echo "🔍 Deploy to Develop site..."
-                    }
-                }
+        // stage("Deploy to K8s Cluster") {
+        //     when {
+        //         expression { env.BUILD_DEPLOY != "true" }
+        //     }
+        //     parallel {
+        //         stage("Develop") {
+        //             when {
+        //                 branch "develop"
+        //             }
+        //             steps {
+        //                 echo "🔍 Deploy to Develop site..."
+        //             }
+        //         }
 
-                stage("UAT") {
-                    when {
-                        branch "uat"
-                    }
-                    steps {
-                        echo "🔍 Deploy to UAT site..."
-                    }
-                }
+        //         stage("UAT") {
+        //             when {
+        //                 branch "uat"
+        //             }
+        //             steps {
+        //                 echo "🔍 Deploy to UAT site..."
+        //             }
+        //         }
 
-                stage("Production") {
-                    when {
-                        tag "release-v.*"
-                    }
-                    steps {
-                        echo "🔍 Deploy to Production site..."
-                    }
-                }
-                //     script {
-                //         def ns = (BRANCH_NAME == 'production') ? 'airflow-prod' : 'airflow-dev'
-                //         sh """
-                //             helm upgrade airflow-core ./helm \
-                //             --install \
-                //             --namespace ${ns} \
-                //             --set images.airflow.repository=${GCR_REGION}/${GCP_PROJECT}/${IMAGE_NAME} \
-                //             --set images.airflow.tag=${env.BUILD_NUMBER}
-                //         """
-                //     }
-            }
-        }
+        //         stage("Production") {
+        //             when {
+        //                 tag "release-v.*"
+        //             }
+        //             steps {
+        //                 echo "🔍 Deploy to Production site..."
+        //             }
+        //         }
+        //         //     script {
+        //         //         def ns = (BRANCH_NAME == 'production') ? 'airflow-prod' : 'airflow-dev'
+        //         //         sh """
+        //         //             helm upgrade airflow-core ./helm \
+        //         //             --install \
+        //         //             --namespace ${ns} \
+        //         //             --set images.airflow.repository=${GCR_REGION}/${GCP_PROJECT}/${IMAGE_NAME} \
+        //         //             --set images.airflow.tag=${env.BUILD_NUMBER}
+        //         //         """
+        //         //     }
+        //     }
+        // }
     }
 
     post {
