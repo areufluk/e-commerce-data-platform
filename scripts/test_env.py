@@ -42,7 +42,7 @@ def top_ten_salesperson_sales():
     df_sales = df_sales.merge(df_salesperson, left_on="SalesPersonID", right_on="EmployeeID", how="left")
     df_sales["SalesTotal"] = df_sales["Price"] * df_sales["Quantity"]
 
-    df_sales = df_sales.groupby(by="SalesPersonID").agg({"Quantity": "sum"}).reset_index()
+    df_sales = df_sales.groupby(by="SalesPersonID").agg({"SalesTotal": "sum"}).reset_index()
     df_sales = df_sales.sort_values("SalesTotal", ascending=False)
 
     print(df_sales[["FirstName", "SalesTotal"]].head(10))
