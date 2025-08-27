@@ -71,15 +71,15 @@ with DAG(
         dag=dag
     )
 
-    # extract_fact_grocery_sales_job = SparkSubmitOperator(
-    #     task_id='extract_fact_grocery_sales',
-    #     conn_id='spark_conn',
-    #     application='/opt/airflow/dags/repo/scripts/spark/fact_grocery_sales.py',
-    #     jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
-    #     driver_class_path='/opt/airflow/jars/',
-    #     py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
-    #     dag=dag
-    # )
+    extract_fact_grocery_sales_job = SparkSubmitOperator(
+        task_id='extract_fact_grocery_sales',
+        conn_id='spark_conn',
+        application='/opt/airflow/dags/repo/scripts/spark/fact_grocery_sales.py',
+        jars='/opt/airflow/jars/gcs-connector-hadoop3-latest.jar',
+        driver_class_path='/opt/airflow/jars/',
+        py_files='/opt/airflow/dags/repo/scripts/spark/utils/create_session.py',
+        dag=dag
+    )
 
     soda_quality_check = BashOperator(
         task_id="soda_quality_check",
@@ -93,6 +93,6 @@ with DAG(
         >> extract_dim_customer_job
         >> extract_dim_employee_job
         >> extract_dim_product_job
-        # >> extract_fact_grocery_sales_job
-        # >> soda_quality_check
+        >> extract_fact_grocery_sales_job
+        >> soda_quality_check
     )
