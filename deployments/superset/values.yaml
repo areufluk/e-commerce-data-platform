@@ -1,0 +1,50 @@
+configOverrides:
+  secret: |
+    SECRET_KEY = ""
+  feature_override: |
+    FEATURE_FLAGS = {
+        "TAGGING_SYSTEM": True
+    }
+
+# Superset node configuration
+supersetNode:
+  connections:
+    # Redis
+    redis_host: ""
+    redis_port: "6379"
+    redis_cache_db: "3"
+    redis_celery_db: "2"
+    # Postgresql
+    db_host: ""
+    db_port: "5432"
+    db_user: ""
+    db_pass: ""
+    db_name: "superset-metadata"
+
+bootstrapScript: |
+  #!/bin/bash
+
+  # Install required Python packages
+  pip install \
+    psycopg2-binary==2.9.10 \
+    sqlalchemy-bigquery==1.12.0  
+
+  # Create bootstrap file if it doesn't exist
+  if 
+    [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap;
+  fi
+
+init:
+  createAdmin: true
+  adminUser:
+    username: admin
+    firstname: Superset
+    lastname: Admin
+    email: admin@superset.com
+    password: admin
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false

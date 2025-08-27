@@ -1,0 +1,97 @@
+images:
+  airflow:
+    repository: <private docker image repo>
+    tag: 1.1.3
+    pullPolicy: Always
+
+executor: "CeleryExecutor"
+
+data:
+  brokerUrlSecretName: airflow-broker-url
+  metadataSecretName: airflow-metadata
+
+fernetKeySecretName: airflow-fernet-key
+webserverSecretKeySecretName: airflow-webserver-secret-key
+
+redis:
+  enabled: false
+
+postgresql:
+  enabled: false
+
+extraEnvFrom: |
+  - secretRef:
+      name: "airflow-task-env"
+
+env:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: "/opt/airflow/secrets/service-account.json"
+
+extraEnv: |
+  - name: AIRFLOW__CELERY__WORKER_CONCURRENCY
+    value: "8"
+  - name: AIRFLOW__CORE__DEFAULT_TIMEZONE
+    value: "Asia/Bangkok"
+  - name: AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE
+    value: "Asia/Bangkok"
+  - name: AIRFLOW__CORE__LOAD_EXAMPLES
+    value: "False"
+
+dags:
+  gitSync:
+    enabled: true
+    repo: git@github.com:areufluk/e-commerce-data-platform.git
+    branch: production
+    rev: HEAD
+    maxFailures: 0
+    subPath: "dags"
+    sshKeySecret: airflow-git-ssh
+
+workers:
+  persistence:
+    enabled: false
+
+  extraVolumeMounts:
+    - name: google-service-acccount
+      mountPath: /opt/airflow/secrets
+  extraVolumes:
+    - name: google-service-acccount
+      secret:
+        secretName: airflow-service-account-secret
+
+scheduler:
+  extraVolumeMounts:
+    - name: google-service-acccount
+      mountPath: /opt/airflow/secrets
+  extraVolumes:
+    - name: google-service-acccount
+      secret:
+        secretName: airflow-service-account-secret
+
+webserver:
+  extraVolumeMounts:
+    - name: google-service-acccount
+      mountPath: /opt/airflow/secrets
+  extraVolumes:
+    - name: google-service-acccount
+      secret:
+        secretName: airflow-service-account-secret
+
+triggerer:
+  persistence:
+    enabled: false
+
+  extraVolumeMounts:
+    - name: google-service-acccount
+      mountPath: /opt/airflow/secrets
+  extraVolumes:
+    - name: google-service-acccount
+      secret:
+        secretName: airflow-service-account-secret
+
+config:
+  logging:
+    remote_logging: "True"
+    remote_base_log_folder: ""
+    remote_log_conn_id: "airflow-service-account-secret"
+    google_key_path:  "/opt/airflow/secrets/service-account.json"

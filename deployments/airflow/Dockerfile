@@ -24,5 +24,4 @@ ENV PYTHONPATH=${PYTHONPATH}:/opt/airflow/dags/repo
 RUN pip install --no-cache-dir \
     "apache-airflow[google]==${AIRFLOW_VERSION}" \
     apache-airflow-providers-apache-spark==5.0.0 \
-    acryl-datahub==1.0.0.2 \
     soda-core-bigquery==3.5.2
